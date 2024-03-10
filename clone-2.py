@@ -24,36 +24,40 @@ for subdir in next(os.walk(base_directory))[1]:
     xml_files = glob.glob(os.path.join(subdir_path, '*.xml'))
     if xml_files:
         filepath = xml_files[0]
-        tree = ET.parse(filepath)
-        root = tree.getroot()
+        try:
+            tree = ET.parse(filepath)
+            root = tree.getroot()
+        except ET.ParseError as e:
+            print(f"**Error:** XML parsing error in file {filepath}: {e}")
+            continue
 
         student_name_element = root.find('name')
         if student_name_element is None:
-            print(f"Error: 'name' tag not found in {filepath}. Skipping.\n")
+            print(f"**Error:** 'name' tag not found in {filepath}. Skipping.\n")
             continue
         student_name = student_name_element.text
 
         url_element = root.find('repositoryurl')
         if url_element is None:
-            print(f"Error: 'repositoryurl' tag not found in {filepath}. Skipping.\n")
+            print(f"**Error:** 'repositoryurl' tag not found in {filepath}. Skipping.\n")
             continue
         url = url_element.text
 
         name_element = root.find('repositoryname')
         if name_element is None:
-            print(f"Error: 'repositoryname' tag not found in {filepath}. Skipping.\n")
+            print(f"**Error:** 'repositoryname' tag not found in {filepath}. Skipping.\n")
             continue
         name = name_element.text
 
         hash_element = root.find('lastcommithash')
         if hash_element is None:
-            print(f"Error: 'lastcommithash' tag not found in {filepath}. Skipping.\n")
+            print(f"**Error:** 'lastcommithash' tag not found in {filepath}. Skipping.\n")
             continue
         hash_ = hash_element.text
 
         matnr_element = root.find('matrikelnummer')
         if matnr_element is None:
-            print(f"Error: 'matrikelnummer' tag not found in {filepath}. Skipping.\n")
+            print(f"**Error:** 'matrikelnummer' tag not found in {filepath}. Skipping.\n")
             continue
         matnr = matnr_element.text
 
@@ -67,7 +71,7 @@ for subdir in next(os.walk(base_directory))[1]:
 
         success, err = run_command(f"git clone {url}", cwd=subdir_path)
         if not success:
-            print(f"Error, cloning failed - {err}\n")
+            print(f"**Error:** Cloning failed - {err}\n")
             continue
 
         run_command(f"git checkout {hash_}", cwd=repo_path)
