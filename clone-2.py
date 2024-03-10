@@ -27,11 +27,35 @@ for subdir in next(os.walk(base_directory))[1]:
         tree = ET.parse(filepath)
         root = tree.getroot()
 
-        student_name = root.find('name').text
-        url = root.find('repositoryurl').text
-        name = root.find('repositoryname').text
-        hash_ = root.find('lastcommithash').text
-        matnr = root.find('matrikelnummer').text
+        student_name_element = root.find('name')
+        if student_name_element is None:
+            print(f"Error: 'name' tag not found in {filepath}. Skipping.\n")
+            continue
+        student_name = student_name_element.text
+
+        url_element = root.find('repositoryurl')
+        if url_element is None:
+            print(f"Error: 'repositoryurl' tag not found in {filepath}. Skipping.\n")
+            continue
+        url = url_element.text
+
+        name_element = root.find('repositoryname')
+        if name_element is None:
+            print(f"Error: 'repositoryname' tag not found in {filepath}. Skipping.\n")
+            continue
+        name = name_element.text
+
+        hash_element = root.find('lastcommithash')
+        if hash_element is None:
+            print(f"Error: 'lastcommithash' tag not found in {filepath}. Skipping.\n")
+            continue
+        hash_ = hash_element.text
+
+        matnr_element = root.find('matrikelnummer')
+        if matnr_element is None:
+            print(f"Error: 'matrikelnummer' tag not found in {filepath}. Skipping.\n")
+            continue
+        matnr = matnr_element.text
 
         print(f"Cloning {student_name} ({matnr}) Repository: {url} ({name})...")
 
