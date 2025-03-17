@@ -82,7 +82,7 @@ for subdir in next(os.walk(base_directory))[1]:
         actual_repo_path = os.path.join(subdir_path, clone_output_dir)
 
         if clone_output_dir != name:
-            print(f"**Warning:** Cloned repository folder name '{clone_output_dir}' does not match the repository name '{name}' in the XML file. Renaming folder name to XML name.\n")
+            print(f"**Warning:** Cloned repository folder name '{clone_output_dir}' does not match the repository name '{name}' in the XML file. Renaming folder name to XML name.")
             os.rename(actual_repo_path, repo_path)
 
         run_command(f"git checkout {hash_}", cwd=repo_path)
