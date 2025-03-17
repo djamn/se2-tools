@@ -74,6 +74,17 @@ for subdir in next(os.walk(base_directory))[1]:
             print(f"**Error:** Cloning failed - {err}\n")
             continue
 
+        # Check if cloned folder name matches repository name in XML file
+        clone_output_dir = url.split('/')[-1]
+        if(clone_output_dir.endswith('.git')):
+            clone_output_dir = clone_output_dir[:-4] # Removes .git extension
+        
+        actual_repo_path = os.path.join(subdir_path, clone_output_dir)
+
+        if clone_output_dir != name:
+            print(f"**Warning:** Cloned repository folder name '{clone_output_dir}' does not match the repository name '{name}' in the XML file. Using folder name.\n")
+            repo_path = actual_repo_path
+
         run_command(f"git checkout {hash_}", cwd=repo_path)
 
         print(f"Repo von {student_name}: {name} ({url}) successfully processed\n")
