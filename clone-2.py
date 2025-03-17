@@ -111,7 +111,7 @@ for subdir in next(os.walk(base_directory))[1]:
         actual_repo_path = os.path.join(subdir_path, clone_output_dir)
 
         if clone_output_dir != name:
-            error_msg = f"Cloned repository folder name '{clone_output_dir}' does not match the repository name '{name}' in the XML file"
+            error_msg = f"Cloned repository folder name '{clone_output_dir}' does not match the repository name '{name}' in the XML file. Renaming folder to XML name"
             print(f"**Warning:** {error_msg}.")
             append_error(error_msg, subdir, False)
             os.rename(actual_repo_path, repo_path)
