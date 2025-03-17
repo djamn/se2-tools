@@ -125,9 +125,9 @@ if errors:
     print("\n**Hint:** There were the following errors and warnings:")
     for error in errors:
         if(error['isError']):
-            print(f"- Submission: {error['submission']}, Error: {error['error']}")
+            print(f"- [Error] Submission: {error['submission']}, Error: {error['error']}")
         else: 
-            print(f"- Submission: {error['submission']}, Warning: {error['error']}")
+            print(f"- [Warning] Submission: {error['submission']}, Warning: {error['error']}")
         
 else:
     print("No errors occurred during processing.")
