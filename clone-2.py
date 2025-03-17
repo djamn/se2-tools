@@ -15,8 +15,9 @@ def run_command(command, cwd=None):
         result = subprocess.run(command, cwd=cwd, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         return True, result.stdout.decode()
     except subprocess.CalledProcessError as e:
-        print(f"Error executing command: {command}\nError message: {e.stderr.decode()}")
-        return False, e.stderr.decode()
+        error_message = e.stderr.decode().strip()
+        print(f"**Error:** {command}: {error_message}")
+        return False, error_message
 
 # Iterates through each subdirectory in the specified directory
 for subdir in next(os.walk(base_directory))[1]:
@@ -87,4 +88,4 @@ for subdir in next(os.walk(base_directory))[1]:
 
         run_command(f"git checkout {hash_}", cwd=repo_path)
 
-        print(f"Repo von {student_name}: {name} ({url}) successfully processed\n")
+        print(f"Repo von {student_name}: {name} ({url}) successfully processed.\n")
