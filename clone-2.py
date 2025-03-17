@@ -42,7 +42,7 @@ for subdir in next(os.walk(base_directory))[1]:
             root = tree.getroot()
         except ET.ParseError as e:
             error_msg = f"XML parsing error in file {filepath}: {e}"
-            print(f"**Error:** {error_msg}. Skipping.\n")
+            print(f"[{subdir}] **Error:** {error_msg}. Skipping.\n")
             append_error(error_msg, subdir)
             continue
 
