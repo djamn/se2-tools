@@ -68,7 +68,7 @@ for subdir in next(os.walk(base_directory))[1]:
             print(f"**Error:** {error_msg}. Skipping.\n")
             append_error(error_msg, subdir)
             continue
-        name = name_element.text
+        name = name_element.text.strip()
 
         hash_element = root.find('lastcommithash')
         if hash_element is None:
